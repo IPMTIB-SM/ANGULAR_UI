@@ -1,26 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent{
 
   showAnalyzer:boolean = true;
   showMigrator:boolean = false;
   showGenerator:boolean = false;
   public values: any;
-  show:boolean = false;
+  showAnalyzerData:boolean = false;
   showAddedRow:boolean = false;
   rowValue:any = null;
   showPopup:boolean = false;
+  analyzerPathLocation:string ="";
+  analyzerCompatibility:string ="";
+  showIndex:number = 0;
+
   public URLG = 'http://54.85.113.141:8181/integration-framework-0.0.1-SNAPSHOT/api/v1/deploymentDetails';
 
-  constructor(public http: HttpClient, public spinnerService: NgxSpinnerService, public router: Router) { }
+  constructor(public http: HttpClient, public spinnerService: NgxSpinnerService) { }
 
   ngOnInit(): void {
     // this.onFetchAll();
@@ -44,18 +47,19 @@ export class HomeComponent implements OnInit {
 
   analyze(analyzeData: any){
       console.log(analyzeData);
-      // this.spinnerService.show();
     this.spinnerService.show();
     // Send Http request
     this.http.get(this.URLG)
       .subscribe(response => {
         this.values = response;
+        this.analyzerPathLocation = analyzeData.location;
+        this.analyzerCompatibility = analyzeData.compatibility;
       });
     setTimeout(() => {
-      /** spinner ends after 5 seconds */
+      /** spinner ends after 2 seconds */
       this.spinnerService.hide();
-      this.show = true;
-    }, 3000);
+      this.showAnalyzerData = true;
+    }, 2000);
   }
 
   generate(generateForm:any){
@@ -66,15 +70,18 @@ export class HomeComponent implements OnInit {
     console.log(migrateForm);
   }
 
-  onRowClick(value:string){
+  onRowClick(rowIndex:any,value:string){
     if(value == 'FAILURE'){
       this.showAddedRow = true;
-      // alert(value)
+      // alert("Solution- Kindly try again")
+      this.showIndex = rowIndex;
       this.showPopup = true;
     }else{
       this.showAddedRow = false;
       this.rowValue = null;
       this.showPopup = false;
+      this.showIndex = 0;
     }  
   }
+  
 }

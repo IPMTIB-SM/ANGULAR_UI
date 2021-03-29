@@ -1,6 +1,6 @@
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
     <p style="color: white">Please Wait... </p>  
-</ngx-spinner> 
+</ngx-spinner>  -->
 <div class="container register">
     <div class="row">
         <div class="col-md-3 register-left">
@@ -45,7 +45,7 @@
                             </div>                            
                         </div>
                         <div class="col-md-8">
-                            <button [disabled]="analyzeForm.form.invalid" type="submit" class="btn btn-lg btn-block" style="background-color:#0062cc; color: white;border-radius: 1.5rem; margin-left: 90px;margin-top: 20px;">Analyze</button>
+                            <button [disabled]="analyzeForm.form.invalid" type="submit" class="btn btn-lg btn-block btnRegister">Analyze</button>
                         </div>
                     </form>
                 </div>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <button [disabled]="migrateForm.form.invalid" class="btn btn-lg btn-block" style="background-color:#0062cc; color: white;border-radius: 1.5rem; margin-left: 70px;margin-top: 20px;">Migrate</button>
+                            <button [disabled]="migrateForm.form.invalid" class="btn btn-lg btn-block btnRegister">Migrate</button>
                         </div>
                     </form>
                 </div>
@@ -155,7 +155,7 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <button [disabled]="generateForm.form.invalid" class="btn btn-lg btn-block" style="background-color:#0062cc; color: white;border-radius: 1.5rem; margin-left: 70px;margin-top: 20px;">Generate</button>
+                            <button [disabled]="generateForm.form.invalid" class="btn btn-lg btn-block btnRegister">Generate</button>
                         </div>
                     </form>
                 </div>
@@ -163,34 +163,40 @@
         </div>
     </div>
 </div>
-<div class="container register" *ngIf="showAnalyzerData">
+<div class="container analyzeData" *ngIf="showAnalyzerData">
     <div class="row">
         <div class="col-md-3 register-left">
         </div>
         <div class="col-md-9 register-right">
             <div style="text-align: center;margin-top: 30px;"><p><b>{{analyzerCompatibility}}</b> data for path location: <b>{{analyzerPathLocation}}</b></p></div>
-            <div class="table-responsive" style="margin-left: 40px;width: 90%;margin-bottom: 10px;height: 500px;margin-top: 40px;" >
-                <table class="table table-striped table-hover table-bordered" style="font: outline;margin-left: 80px;width: 90%;">
-                <thead>
-                  <tr class="success">
-                    <th>ID</th>
-                    <th>Interface Name</th>
-                    <th>Deployment Mode</th>
-                    <th>Deployment Status</th>
-                  </tr>
-                </thead>
-            
-                <tbody>
-                  <tr *ngFor="let value of values; index as i" (click)="onRowClick(i,value.deploymentStatus)" [ngStyle]="{'backgroundColor': value.deploymentStatus == 'SUCCESS' ? 'rgb(130 208 147)' : (value.deploymentStatus == 'FAILURE' ? 'rgb(228 131 131)' : '#d8b980') }" style="height: 50px;" >
-                    <td>{{ value.projectId || 'NA' }}</td>
-                    <td>{{ value.interfaceName || 'NA' }}</td>
-                    <td>{{ value.deploymentMode || 'NA' }}</td>
-                    <td>{{ value.deploymentStatus || 'NA' }}</td>
-                    <td *ngIf="showAddedRow && (i == showIndex)" style="background-color: #92C3BA;border:none;">Solution :- Retry later</td>
-                  </tr>
-                </tbody>
+            <div class="table-responsive" style="margin-left: 90px;width: 90%;margin-bottom: 10px;height: 500px;margin-top: 40px;" >
+                <table class="table">
+                    <thead>
+                      <tr class="accordion-toggle collapsed" style="border: 1px solid black;;text-align: center;height: 50px;">
+                       <div class="row" >
+                           <div class="rowData">ID</div>
+                           <div class="rowData">Interface Name</div>
+                           <div class="rowData">Deployment Mode</div>
+                           <div class="rowData">Deployment Status</div>
+                       </div>
+                       </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="accordion-toggle collapsed" style="border: 0.5px solid black;;text-align: center;height: 50px;" *ngFor="let value of (values | sortTable); index as i" (click)="expandRow(i,value.deploymentStatus)" [ngStyle]="{'backgroundColor': value.deploymentStatus == 'SUCCESS' ? 'rgb(130 208 147)' : (value.deploymentStatus == 'FAILURE' ? 'rgb(228 131 131)' : '#d8b980') }">
+                            <div class="row" >
+                                <div class="rowData">{{ value.projectId || 'NA' }}</div>
+                                <div class="rowData">{{ value.interfaceName || 'NA' }}</div>
+                                <div class="rowData">{{ value.deploymentMode || 'NA' }}</div>
+                                <div class="rowData">{{ value.deploymentStatus || 'NA' }}</div>
+                            </div>
+                           <div style="height: 20px;padding: 20px;background-color: rgba(38, 11, 189, 0.11);text-align: center;padding-bottom: 50px;" *ngIf="i === expandedIndex">This is an expanded content of {{ value.interfaceName || 'NA' }}</div>
+                       </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<div class="loading" *ngIf="showLoading">
+    <mat-spinner></mat-spinner>
+  </div>

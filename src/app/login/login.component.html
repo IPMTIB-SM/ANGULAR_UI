@@ -2,7 +2,7 @@
 
   <!-- <h1 style="text-align: center;color: #2A88AD; margin-top: 20px;">TIBSmartMigrator</h1><p style="text-align: center;color: #2A88AD; padding: 10px;">Utility to migrate BW5.x code to BW6.x/CE. This utility has optionaly ability to Clean Up Code, convert RV to EMS/HTTP, Folder Reorganization of BW6.x/CE project. This tool also has features of Analyzing the BW5.x code for migration compatibility and Generating BW6.x/CE deployemnt artifact</p> -->
 <div class="container register">
-      <div class="row" style="margin-top: 8%;">
+      <div class="row">
           <div class="col-md-3 register-left">
               <!-- <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/> -->
               <img src="assets/user_icon.png"/>
@@ -32,6 +32,10 @@
           </div>
       </div>
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
 <p style="color: white">Please Wait... </p>  
-</ngx-spinner> 
+</ngx-spinner>  -->
+
+<div class="loading" *ngIf="showLoading">
+    <mat-spinner></mat-spinner>
+  </div>

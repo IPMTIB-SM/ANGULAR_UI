@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginComponent implements OnInit {
 
+  showLoading:boolean = false;
   constructor(private router: Router, public spinnerService: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -16,11 +17,11 @@ export class LoginComponent implements OnInit {
 
   doLogin(loginformData: any){
     console.log(loginformData);
-    this.spinnerService.show();
+    this.showLoading = true;
  
     setTimeout(() => {
       /** spinner ends after 3 seconds */
-      this.spinnerService.hide();
+      this.showLoading = false;
       this.router.navigate(['/home'])
     }, 3000);
   }

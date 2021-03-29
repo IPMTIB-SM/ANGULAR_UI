@@ -4,9 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-spinner";
 import { HttpClientModule } from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SortTablePipe } from './sort-table.pipe';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,9 +16,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    NgxSpinnerModule,
     HttpClientModule,
-    NgbModule
+    MatProgressSpinnerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

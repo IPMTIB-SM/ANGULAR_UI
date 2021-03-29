@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   { path: '', component: LoginComponent }
@@ -12,7 +12,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [LoginComponent],
   imports: [
-    CommonModule,FormsModule,NgxSpinnerModule,
+    CommonModule,FormsModule,MatProgressSpinnerModule,
     RouterModule.forChild(routes)
   ]
 })

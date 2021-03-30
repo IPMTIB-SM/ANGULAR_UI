@@ -7,10 +7,10 @@ export class SortTablePipe implements PipeTransform {
 
     transform(array: Array<any>): any {
       array.sort((a: any, b: any) => {
-        console.log(a.deploymentStatus);
-        if (a.deploymentStatus < b.deploymentStatus) {
+        console.log(a.Compatibility[0]);
+        if (a.Compatibility[0] < b.Compatibility[0]) {
           return -1;
-        } else if (a.deploymentStatus > b.deploymentStatus) {
+        } else if (a.Compatibility[0] > b.Compatibility[0]) {
           return 1;
         } else {
           return 0;

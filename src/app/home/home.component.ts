@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as xml2js from 'xml2js';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,6 @@ export class HomeComponent{
   showGenerator:boolean = false;
   public values: any;
   showAnalyzerData:boolean = false;
-  showAddedRow:boolean = false;
-  rowValue:any = null;
-  showPopup:boolean = false;
   analyzerPathLocation:string ="";
   analyzerCompatibility:string ="";
   showIndex:number = 0;
@@ -30,7 +28,7 @@ export class HomeComponent{
     // this.onFetchAll();
   }
   expandRow(index: number,value:string): void {
-    if(value == 'FAILURE'){
+    if(value == 'false'){
        this.expandedIndex = index === this.expandedIndex ? -1 : index;
     }
   }
@@ -74,6 +72,25 @@ export class HomeComponent{
           this.spinnerService.hide();
           }, 2000)
       // });
+      const xmlString = `
+      <?xml version="1.0" encoding="UTF-8"?><response><location>C:\TibSmartMigrator\migration\src\file_migration\File_IntelliReport</location><Rows><root><ActivityName>File Poller</ActivityName><ActivityGroup>File</ActivityGroup><Count>1</Count><Compatibility>true</Compatibility></root><root><ActivityName>Read File</ActivityName><ActivityGroup>File</ActivityGroup><Count>1</Count><Compatibility>true</Compatibility></root><root><ActivityName>Write File</ActivityName><ActivityGroup>File</ActivityGroup><Count>2</Count><Compatibility>true</Compatibility></root><root><ActivityName>Create File</ActivityName><ActivityGroup>File</ActivityGroup><Count>1</Count><Compatibility>true</Compatibility></root><root><ActivityName>Remove File</ActivityName><ActivityGroup>File</ActivityGroup><Count>1</Count><Compatibility>true</Compatibility></root><root><ActivityName>Wait for File Change</ActivityName><ActivityGroup>File</ActivityGroup><Count>1</Count><Compatibility>false</Compatibility></root><root><ActivityName>Call Process</ActivityName><ActivityGroup>General Activities</ActivityGroup><Count>1</Count><Compatibility>true</Compatibility></root><root><ActivityName>Parse XML</ActivityName><ActivityGroup>XML Activities</ActivityGroup><Count>2</Count><Compatibility>true</Compatibility></root></Rows></response>
+      `;
+        const parser = new xml2js.Parser({ strict: false, trim: true });
+        xml2js.parseString(xmlString, {trim: true}, (err, result) => {
+          if(err) console.log(err);
+          console.log(result.response.Rows[0].root); 
+          console.log(result.response.Rows[0].root[0].ActivityGroup[0]); 
+          console.log(result.response.Rows[0].root[0].ActivityName[0]); 
+          console.log(result.response.Rows[0].root[0].Count[0]); 
+          console.log(result.response.Rows[0].root[0].Compatibility[0]); 
+
+
+          this.values = result.response.Rows[0].root;
+      });
+        // console.log(xmlres);
+        // parser.parseString(xmlString, (err, result) => {
+        //   console.log(result);
+        // });
   }
 
   generate(generateForm:any){
@@ -82,20 +99,6 @@ export class HomeComponent{
 
   migrate(migrateForm:any){
     console.log(migrateForm);
-  }
-
-  onRowClick(rowIndex:any,value:string){
-    if(value == 'FAILURE'){
-      this.showAddedRow = true;
-      // alert("Solution- Kindly try again")
-      this.showIndex = rowIndex;
-      this.showPopup = true;
-    }else{
-      this.showAddedRow = false;
-      this.rowValue = null;
-      this.showPopup = false;
-      this.showIndex = 0;
-    }  
   }
   
 }

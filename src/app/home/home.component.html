@@ -174,22 +174,22 @@
                     <thead>
                       <tr class="accordion-toggle collapsed" style="border: 1px solid black;;text-align: center;height: 50px;">
                        <div class="row">
-                           <div class="rowData"><b>ID</b></div>
-                           <div class="rowData"><b>Interface Name</b></div>
-                           <div class="rowData"><b>Deployment Mode</b></div>
-                           <div style="width: 25%;padding-top: 10px;height: 50px;overflow: hidden;"><b>Deployment Status</b></div>
+                           <div class="rowData"><b>Activity Group</b></div>
+                           <div class="rowData"><b>Activity Name</b></div>
+                           <div class="rowData"><b>Count</b></div>
+                           <div style="width: 25%;padding-top: 10px;height: 50px;overflow: hidden;"><b>Compatibility</b></div>
                        </div>
                        </tr>
                     </thead>
                     <tbody>
-                      <tr class="accordion-toggle collapsed" style="border: 0.5px solid black;;text-align: center;height: 50px;" *ngFor="let value of (values | sortTable); index as i" (click)="expandRow(i,value.deploymentStatus)" [ngStyle]="{'backgroundColor': value.deploymentStatus == 'SUCCESS' ? 'rgb(130 208 147)' : (value.deploymentStatus == 'FAILURE' ? 'rgb(228 131 131)' : '#d8b980') }">
+                      <tr class="accordion-toggle collapsed" style="border: 0.5px solid black;;text-align: center;height: 50px;" *ngFor="let value of (values | sortTable); index as i" (click)="expandRow(i,value.Compatibility[0])" [ngStyle]="{'backgroundColor': value.Compatibility[0] == 'true' ? 'rgb(130 208 147)' : 'rgb(228 131 131)' }">
                             <div class="row" >
-                                <div class="rowData">{{ value.projectId || 'NA' }}</div>
-                                <div class="rowData">{{ value.interfaceName || 'NA' }}</div>
-                                <div class="rowData">{{ value.deploymentMode || 'NA' }}</div>
-                                <div style="width: 25%;padding-top: 10px;height: 50px;overflow: hidden;">{{ value.deploymentStatus || 'NA' }}</div>
+                                <div class="rowData">{{ value.ActivityGroup[0] }}</div>
+                                <div class="rowData">{{ value.ActivityName[0] }}</div>
+                                <div class="rowData">{{ value.Count[0] }}</div>
+                                <div style="width: 25%;padding-top: 10px;height: 50px;overflow: hidden;">{{ value.Compatibility[0] }}</div>
                             </div>
-                           <div style="height: 20px;padding: 20px;background-color: rgba(38, 11, 189, 0.11);text-align: center;padding-bottom: 50px;" *ngIf="i === expandedIndex">This is an expanded content of {{ value.interfaceName || 'NA' }}</div>
+                           <div style="height: 20px;padding: 20px;background-color: rgb(11 189 140 / 18%);text-align: center;padding-bottom: 50px;" *ngIf="i === expandedIndex">This is an expanded content of <b>{{ value.ActivityName[0] }}</b></div>
                        </tr>
                     </tbody>
                 </table>

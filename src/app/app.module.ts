@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SortTablePipe } from './sort-table.pipe';
 
 @NgModule({
   declarations: [
@@ -16,8 +14,7 @@ import { SortTablePipe } from './sort-table.pipe';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
-    MatProgressSpinnerModule
+    HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

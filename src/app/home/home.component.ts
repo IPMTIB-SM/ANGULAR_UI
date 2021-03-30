@@ -21,7 +21,6 @@ export class HomeComponent{
   analyzerCompatibility:string ="";
   showIndex:number = 0;
   public expandedIndex:number;
-  showLoading:boolean = false;
 
   public URLG = 'http://54.85.113.141:8181/integration-framework-0.0.1-SNAPSHOT/api/v1/deploymentDetails';
 
@@ -56,7 +55,7 @@ export class HomeComponent{
   
   analyze(analyzeData: any){
       console.log(analyzeData);
-    this.showLoading = true;
+    this.spinnerService.show();
     // Send Http request
     // this.http.get(this.URLG)
     //   .subscribe(response => {
@@ -72,7 +71,7 @@ export class HomeComponent{
         this.analyzerCompatibility = analyzeData.compatibility;
         this.showAnalyzerData = true;
         setTimeout(() => {
-          this.showLoading = false;
+          this.spinnerService.hide();
           }, 2000)
       // });
   }
